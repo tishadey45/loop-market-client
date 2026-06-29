@@ -5,7 +5,7 @@ import { TrendingUp, ShoppingBag, Users, Layers, ClipboardList } from "lucide-re
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 
 export default function DashboardHome() {
-  const userRole = "seller";
+  const userRole = "admin";
 
   const salesData = [
     { name: "Jan", sales: 4000, orders: 24 },

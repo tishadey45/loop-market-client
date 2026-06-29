@@ -10,7 +10,7 @@ import {
 
 export default function DashboardLayout({ children }) {
   const pathname = usePathname();
-  const userRole = "seller"; 
+  const userRole = "admin"; 
   const isActive = (path) => pathname === path;
 
   return (
@@ -63,7 +63,7 @@ export default function DashboardLayout({ children }) {
               <Link href="/dashboard/admin-products" className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all ${isActive("/dashboard/admin-products") ? "bg-purple-50 text-purple-600" : "text-gray-600 hover:bg-gray-50"}`}>
                 <PackageCheck size={18} /> Manage Products
               </Link>
-              <Link href="/dashboard/manage-orders" className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all ${isActive("/dashboard/manage-orders") ? "bg-purple-50 text-purple-600" : "text-gray-600 hover:bg-gray-50"}`}>
+              <Link href="/dashboard/admin-orders" className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all ${isActive("/dashboard/admin-orders") ? "bg-purple-50 text-purple-600" : "text-gray-600 hover:bg-gray-50"}`}>
                 <ClipboardList size={18} /> Manage Orders
               </Link>
             </nav>
