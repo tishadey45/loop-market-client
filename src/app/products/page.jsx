@@ -31,10 +31,10 @@ export default function MyProductsPage() {
       <div className="text-center mb-12">
         <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 flex items-center justify-center gap-3">
           <ShoppingBag className="text-blue-600" size={36} />
-          My Product Listings
+          My Products
         </h1>
         <p className="text-slate-500 mt-2 text-sm md:text-base">
-          Manage and view all your active commercial listings on LoopMarket.
+          Manage and view all your active commercial listings on Loop Market.
         </p>
       </div>
 

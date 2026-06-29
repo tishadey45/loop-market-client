@@ -15,3 +15,19 @@ export const addProduct = async (productData) => {
   const { data } = await axiosSecure.post("/add-product", productData);
   return data;
 };
+
+
+export const getMyProducts = async (email) => {
+  const { data } = await axiosSecure.get(`/my-products/${email}`);
+  return data;
+};
+
+export const updateProduct = async (id, updatedData) => {
+  const { data } = await axiosSecure.put(`/api/products/${id}`, updatedData);
+  return data;
+}
+
+export const deleteProduct = async (id) => {
+  const { data } = await axiosSecure.delete(`/api/products/${id}`);
+  return data;
+};
