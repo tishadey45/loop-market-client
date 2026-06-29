@@ -27,3 +27,8 @@ export const blockUser = async (userId) => {
   const { data } = await axiosSecure.patch(`/api/users/block/${userId}`);
   return data;
 }
+
+export const getSingleUser = async (email) => {
+  const { data } = await axiosSecure.get(`/api/users/${email}`);
+  return data;
+};

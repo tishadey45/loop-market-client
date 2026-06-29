@@ -1,5 +1,6 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
+import { admin } from "better-auth/plugins";
 import { MongoClient } from "mongodb";
 
 // console.log(process.env.MONGODB_URI);
@@ -23,4 +24,17 @@ export const auth = betterAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
     },
   },
+
+  database: mongodbAdapter(db, {
+    // Optional: if you don't provide a client, database transactions won't be enabled.
+    client,
+  }),
+  user: {
+    additionalFields: {
+      role: {
+        default: "seller",
+      }
+    },
+  },
+  plugins: [admin()],
 });

@@ -13,7 +13,6 @@ export default function DashboardLayout({ children }) {
   const pathname = usePathname();
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
-  console.log("User from DashboardLayout:", user);
   // const userRole = user?.role 
   const userRole = "seller";
   const isActive = (path) => pathname === path;
@@ -57,7 +56,7 @@ export default function DashboardLayout({ children }) {
           )}
 
           {/* ---------------- ADMIN ROUTED MENU ---------------- */}
-          {userRole === "admin" && (
+          {userRole === "seller" && (
             <nav className="space-y-1">
               <Link href="/dashboard" className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all ${isActive("/dashboard") ? "bg-purple-50 text-purple-600" : "text-gray-600 hover:bg-gray-50"}`}>
                 <LayoutDashboard size={18} /> Dashboard Home
