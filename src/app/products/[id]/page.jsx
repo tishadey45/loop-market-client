@@ -19,9 +19,9 @@ export default async function ProductDetails({ params }) {
     category,
     condition,
     price,
-    images,
+    image,
     description,
-    sellerInfo,
+    seller,
     status,
   } = product;
 
@@ -31,7 +31,7 @@ export default async function ProductDetails({ params }) {
         {/* Left Side: Product Image */}
         <div className="relative min-h-100 bg-gray-50">
           <Image
-            src={images?.[0] || "/placeholder.jpg"}
+            src={image || "/placeholder.jpg"}
             alt={title}
             fill
             className="object-cover"
@@ -80,19 +80,19 @@ export default async function ProductDetails({ params }) {
                   <div className="flex justify-between">
                     <span className="text-gray-500">Name:</span>
                     <span className="font-semibold text-gray-800">
-                      {sellerInfo?.name}
+                      {seller?.name}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-500">Phone:</span>
                     <span className="font-semibold text-gray-800">
-                      {sellerInfo?.phone}
+                      {seller?.phone || "01700000000"}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-500">Email:</span>
                     <span className="font-semibold text-gray-800 truncate max-w-50">
-                      {sellerInfo?.email}
+                      {seller?.email}
                     </span>
                   </div>
                 </div>

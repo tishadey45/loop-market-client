@@ -10,7 +10,7 @@ import {
 
 export default function DashboardLayout({ children }) {
   const pathname = usePathname();
-  const userRole = "admin"; 
+  const userRole = "seller"; 
   const isActive = (path) => pathname === path;
 
   return (

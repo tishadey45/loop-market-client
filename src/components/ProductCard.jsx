@@ -12,9 +12,9 @@ export default function ProductCard({ product }) {
     category,
     condition,
     price,
-    images,
+    image,
     description,
-    sellerInfo,
+    seller,
     status,
   } = product;
 
@@ -42,7 +42,7 @@ export default function ProductCard({ product }) {
       {/* Product Image Section */}
       <div className="relative h-56 w-full overflow-hidden bg-gray-50 shrink-0">
         <Image 
-          src={images?.[0] || "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500"} 
+          src={image|| "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500"} 
           alt={title} 
           fill 
           className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -90,7 +90,7 @@ export default function ProductCard({ product }) {
               <FaUser className="text-xs" /> Seller
             </span>
             <span className="font-medium text-gray-700 truncate max-w-37.5">
-              {sellerInfo?.name}
+              {seller?.name}
             </span>
           </div>
         </div>
