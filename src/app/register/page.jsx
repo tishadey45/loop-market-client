@@ -7,7 +7,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BsGithub } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
-import { useRouter, useSearchParams } from "next/navigation";
 
 export default function RegisterPage() {
   const {
@@ -17,62 +16,42 @@ export default function RegisterPage() {
   } = useForm();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState(""); 
-
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const onSubmit = async (userData) => {
-    setError("");
+    const { data, error } = await authClient.signUp.email({
+      name: userData.name,
+      email: userData.email,
+      phone: userData.phoneNumber,
+      password: userData.password,
+      callbackUrl: "/",
+    });
 
-    try {
-      const { data, error } = await authClient.signUp.email({
-        name: userData.name,
-        email: userData.email,
-        phone: userData.phoneNumber,
-        password: userData.password,
-      });
-
-      if (error) {
-        setError(error.message || "Registration failed. Try again.");
-        return;
-      }
-
-      // console.log("Registration Success:", data);
-      
-      router.push(callbackUrl);
-      router.refresh();
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
-    }
+    console.log(data, error);
   };
 
   const handleGoogleSignIn = async () => {
     await authClient.signIn.social({
       provider: "google",
-      callbackUrl: callbackUrl,
     });
   };
 
   const handleGithubSignIn = async () => {
     await authClient.signIn.social({
       provider: "github",
-      callbackUrl: callbackUrl,
     });
   };
 
   return (
-    <div className="bg-gray-50 flex items-center justify-center px-4 py-10">
+    <div className=" bg-gray-50 flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-2xl bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden">
         {/* Header */}
         <div className="text-center px-8 pt-10 pb-8">
           <h1 className="text-3xl font-bold text-gray-800">
             Create Account
           </h1>
+
           <p className="text-gray-500 mt-2">
-            Join LoopMarket and start trading your products.
+            Join StudyNook and start booking your perfect study room.
           </p>
         </div>
 
@@ -86,11 +65,13 @@ export default function RegisterPage() {
             <label className="block mb-2 text-sm font-medium text-gray-700">
               Full Name
             </label>
+
             <div className="relative">
               <User
                 size={18}
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
               />
+
               <input
                 type="text"
                 placeholder="Enter your full name"
@@ -100,6 +81,7 @@ export default function RegisterPage() {
                 })}
               />
             </div>
+
             {errors.name && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.name.message}
@@ -112,11 +94,13 @@ export default function RegisterPage() {
             <label className="block mb-2 text-sm font-medium text-gray-700">
               Email Address
             </label>
+
             <div className="relative">
               <Mail
                 size={18}
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
               />
+
               <input
                 type="email"
                 placeholder="Enter your email"
@@ -126,6 +110,7 @@ export default function RegisterPage() {
                 })}
               />
             </div>
+
             {errors.email && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.email.message}
@@ -138,11 +123,13 @@ export default function RegisterPage() {
             <label className="block mb-2 text-sm font-medium text-gray-700">
               Phone Number
             </label>
+
             <div className="relative">
               <Phone
                 size={18}
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
               />
+
               <input
                 type="text"
                 placeholder="Enter phone number"
@@ -152,6 +139,7 @@ export default function RegisterPage() {
                 })}
               />
             </div>
+
             {errors.phoneNumber && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.phoneNumber.message}
@@ -164,11 +152,13 @@ export default function RegisterPage() {
             <label className="block mb-2 text-sm font-medium text-gray-700">
               Password
             </label>
+
             <div className="relative">
               <Lock
                 size={18}
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
               />
+
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter password"
@@ -181,6 +171,7 @@ export default function RegisterPage() {
                   },
                 })}
               />
+
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
@@ -189,6 +180,7 @@ export default function RegisterPage() {
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
             </div>
+
             {errors.password && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.password.message}
@@ -196,15 +188,10 @@ export default function RegisterPage() {
             )}
           </div>
 
-          {/* Error Message Display */}
-          {error && (
-            <p className="text-red-500 text-sm font-medium bg-red-50 p-2.5 rounded-lg border border-red-200">{error}</p>
-          )}
-
           {/* Register Button */}
           <button
             type="submit"
-            className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold transition duration-300 shadow-md"
+            className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold transition duration-300"
           >
             Create Account
           </button>
@@ -236,11 +223,11 @@ export default function RegisterPage() {
             Continue with GitHub
           </button>
 
-          {/* Login Link */}
+          {/* Login */}
           <p className="text-center text-sm text-gray-600">
             Already have an account?
             <Link
-              href={`/login?callbackUrl=${encodeURIComponent(callbackUrl)}`}
+              href="/login"
               className="ml-1 font-semibold text-blue-600 hover:underline"
             >
               Login

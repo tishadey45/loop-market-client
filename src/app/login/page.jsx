@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import { useRouter, useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
   const {
@@ -19,45 +18,32 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
-
   const onSubmit = async (userData) => {
     setError("");
 
-    try {
-      const { data, error } = await authClient.signIn.email({
-        email: userData.email,
-        password: userData.password,
-        rememberMe: true,
-      });
+    const { data, error } = await authClient.signIn.email({
+      email: userData.email,
+      password: userData.password,
+      rememberMe: true,
+      callbackUrl: "/",
+    });
 
-      if (error) {
-        setError(error.message || "Invalid email or password");
-        return;
-      }
-
-      // console.log("Login Success:", data);
-      router.push(callbackUrl);
-      router.refresh();
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
+    if (error) {
+      setError(error.message || "Invalid email or password");
     }
+
+    console.log(data);
   };
 
   const handleGoogleSignIn = async () => {
     await authClient.signIn.social({
       provider: "google",
-      callbackUrl: callbackUrl,
     });
   };
 
   const handleGithubSignIn = async () => {
     await authClient.signIn.social({
       provider: "github",
-      callbackUrl: callbackUrl,
     });
   };
 
@@ -70,8 +56,9 @@ export default function LoginPage() {
           <h1 className="text-3xl font-bold text-gray-800">
             Welcome Back 👋
           </h1>
+
           <p className="text-gray-500 mt-2">
-            Login to continue using LoopMarket.
+            Login to continue using StudyNook.
           </p>
         </div>
 
@@ -85,11 +72,13 @@ export default function LoginPage() {
             <label className="block mb-2 text-sm font-medium text-gray-700">
               Email Address
             </label>
+
             <div className="relative">
               <Mail
                 size={18}
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
               />
+
               <input
                 type="email"
                 placeholder="Enter your email"
@@ -99,6 +88,7 @@ export default function LoginPage() {
                 })}
               />
             </div>
+
             {errors.email && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.email.message}
@@ -111,11 +101,13 @@ export default function LoginPage() {
             <label className="block mb-2 text-sm font-medium text-gray-700">
               Password
             </label>
+
             <div className="relative">
               <Lock
                 size={18}
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
               />
+
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
@@ -124,6 +116,7 @@ export default function LoginPage() {
                   required: "Password is required",
                 })}
               />
+
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
@@ -132,6 +125,7 @@ export default function LoginPage() {
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
             </div>
+
             {errors.password && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.password.message}
@@ -139,9 +133,9 @@ export default function LoginPage() {
             )}
           </div>
 
-          {/* Error Display */}
+          {/* Error */}
           {error && (
-            <p className="text-red-500 text-sm font-medium bg-red-50 p-2.5 rounded-lg border border-red-200">{error}</p>
+            <p className="text-red-500 text-sm font-medium">{error}</p>
           )}
 
           {/* Forgot Password */}
@@ -157,7 +151,7 @@ export default function LoginPage() {
           {/* Login Button */}
           <button
             type="submit"
-            className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold transition shadow-md"
+            className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold transition"
           >
             Login
           </button>
@@ -189,11 +183,11 @@ export default function LoginPage() {
             Continue with GitHub
           </button>
 
-          {/* Register Link */}
+          {/* Register */}
           <p className="text-center text-sm text-gray-600">
             Don&apos;t have an account?
             <Link
-              href={`/register?callbackUrl=${encodeURIComponent(callbackUrl)}`}
+              href="/register"
               className="ml-1 font-semibold text-blue-600 hover:underline"
             >
               Register
