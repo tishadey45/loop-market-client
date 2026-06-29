@@ -18,7 +18,7 @@ export default function ProductCard({ product }) {
     status,
   } = product;
 
-  console.log(product)
+  // console.log(product)
 
   const getConditionColor = (cond) => {
     switch (cond?.toLowerCase()) {

@@ -1,8 +1,8 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
+import "./globals.css";
+import UserSyncProvider from "@/components/UserSyncProvider";
 
 export const metadata = {
   title: "Loop Market",
@@ -11,16 +11,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html
-    data-theme="light"
-      lang="en"
-    >
-      <body className=""> 
-        <Navbar/>
-        {children}
-        <Toaster position="top-right" />
-        <Footer/>
-        </body>
+    <html data-theme="light" lang="en">
+      <body className="">
+        <UserSyncProvider>
+          <Navbar />
+          {children}
+          <Toaster position="top-right" />
+          <Footer />
+        </UserSyncProvider>
+      </body>
     </html>
   );
 }

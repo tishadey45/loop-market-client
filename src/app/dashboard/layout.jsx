@@ -7,10 +7,15 @@ import {
   LayoutDashboard, PlusCircle, ShoppingBag, ClipboardList, 
   Users, PackageCheck, LogOut
 } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 
 export default function DashboardLayout({ children }) {
   const pathname = usePathname();
-  const userRole = "admin"; 
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
+  console.log("User from DashboardLayout:", user);
+  // const userRole = user?.role 
+  const userRole = "seller";
   const isActive = (path) => pathname === path;
 
   return (

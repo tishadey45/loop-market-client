@@ -1,11 +1,14 @@
 "use client";
 
-import React from "react";
-import { TrendingUp, ShoppingBag, Users, Layers, ClipboardList } from "lucide-react";
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { authClient } from "@/lib/auth-client";
+import { ClipboardList, Layers, ShoppingBag, TrendingUp, Users } from "lucide-react";
+import { CartesianGrid, Cell, Legend, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 export default function DashboardHome() {
-  const userRole = "admin";
+    const { data: session, isPending } = authClient.useSession();
+    const user = session?.user;
+    // const userRole = user?.role 
+    const userRole = "seller"; // Mock role for demonstration
 
   const salesData = [
     { name: "Jan", sales: 4000, orders: 24 },
