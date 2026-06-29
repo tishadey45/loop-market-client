@@ -1,16 +1,16 @@
 "use client";
 
 import logo from "@/assets/logo.png";
-// import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Navbar() {
-  // const { data: session, isPending } = authClient.useSession();
-  // const user = session?.user;
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
 
-  const user = "Probir Ghosh"; // Mock user for demonstration
-  const isPending = false; // Mock pending state for demonstration
+  // const user = "Probir Ghosh"; // Mock user for demonstration
+  // const isPending = false; // Mock pending state for demonstration
 
   const handleLogout = async () => {
     await authClient.signOut({
